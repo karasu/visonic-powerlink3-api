@@ -42,26 +42,27 @@ Ajouter un bloc de type *Code* et y copier le code du scenario du fichier [vison
 
 Il faut ensuite spécialiser les informations présentes en début de fichier : 
 
-|Nom de la variable php| Signification |
-|--|--|
-|$IP_JEEDOM|Mettre l'ip de la machine hébergeant votre jeedom. Attention, utiliser automatiquement l'IP, pas de nom DNS  |
-|$IP_ALARME|Mettre l'ip ou le nom DNS de votre alarme|
-|$CODE_ALARME|Mettre le code utilisateur de l'alarme, c'est à dire le code que vous utilisez pour l'armer ou la désarmer. **Attention : l'API exposée est en http (et pas https), ce code va donc notamment circuler en clair sur votre réseau**|
-|$PORT_ALARME|Le port de l'api de l'alarme. Normalement ne devrait pas être modifié (8181)|
+Nom de la variable php| Signification 
+--|--
+$IP_JEEDOM|Mettre l'ip de la machine hébergeant votre jeedom. Attention, utiliser automatiquement l'IP, pas de nom DNS  
+$IP_ALARME|Mettre l'ip ou le nom DNS de votre alarme
+$CODE_ALARME|Mettre le code utilisateur de l'alarme, c'est à dire le code que vous utilisez pour l'armer ou la désarmer. **Attention : l'API exposée est en http (et pas https), ce code va donc notamment circuler en clair sur votre réseau**
+$PORT_ALARME|Le port de l'api de l'alarme. Normalement ne devrait pas être modifié (8181)
 
 Et spécialiser les variables php contenant le nom des infos du virtuel à renseigner. Le format est celui jeddom habituel : `#[Nom de l'objet parent][Nom de l'objet][Nom de la zone d'information]#` exemple : `#[Alarme][Visonic][nombreErreurs]#`
-|Nom de la variable php|Description de la zone du virtuel|Type et valeur normale|
-|--|--|--|
-|$VIRT_ERRORS_NUMBER|Nom de l'information Nombre d'erreurs générées par l'appel du scénario. Ce compteur est remis à 0 à chaque appel réussi|0|
-|$VIRT_BATTERY_LEVEL|Niveau de la batterie interne de l'alarme en % |100|
-|$VIRT_GSM_LEVEL| Niveau de reception de la carte GPRS ou 3G en %|Numérique. Dépend de votre niveau de réception|
-|$VIRT_ALARM_CONNECTED|Alarme connectée ou non ?|true|
-|$VIRT_AC_TROUBLE|Alerte sur un problème d'alimentation électrique|false|
-|$VIRT_LOW_BATTERY|Alerte de l'alarme sur un niveau de battterie faible sur l'alarme. En lien direct avec $VIRT_BATTERY_LEVEL mais le flag d'alerte est géré par l'alarme|false|
-|$VIRT_COMMUNICATION_FAILURE|Alerte de l'alarme sur un défaut de communication|false|
-|$VIRT_PART_ARMEE__TAB|Tableau de nom spécifiant pour chaque partition si elle est armée|false si non armé, true sinon|
-|$VIRT_PART_ALERTE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en alerte|false|
-|$VIRT_PART_TROUBLE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en défaut|false|
-|$VIRT_PART_PRETE__TAB|Tableau de nom spécifiant pour chaque partition si elle est prête pour l'armement|true. false peut simplement signifier qu'une porte avec détecteur d'ouverture est ouverte|
-|$VIRT_PART_INCENDIE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en alarme incendie|false|
 
+Nom de la variable php|escription de la zone du virtuel|Type et valeur normale
+--|--|--
+$VIRT_ERRORS_NUMBER|Nom de l'information Nombre d'erreurs générées par l'appel du scénario. Ce compteur est remis à 0 à chaque appel réussi|0
+$VIRT_ERRORS_NUMBER|Nom de l'information Nombre d'erreurs générées par l'appel du scénario. Ce compteur est remis à 0 à chaque appel réussi|0
+$VIRT_BATTERY_LEVEL|Niveau de la batterie interne de l'alarme en % |100
+$VIRT_GSM_LEVEL| Niveau de reception de la carte GPRS ou 3G en %|Numérique. Dépend de votre niveau de réception
+$VIRT_ALARM_CONNECTED|Alarme connectée ou non ?|true
+$VIRT_AC_TROUBLE|Alerte sur un problème d'alimentation électrique|false
+$VIRT_LOW_BATTERY|Alerte de l'alarme sur un niveau de battterie faible sur l'alarme. En lien direct avec $VIRT_BATTERY_LEVEL mais le flag d'alerte est géré par l'alarme|false
+$VIRT_COMMUNICATION_FAILURE|Alerte de l'alarme sur un défaut de communication|false
+$VIRT_PART_ARMEE__TAB|Tableau de nom spécifiant pour chaque partition si elle est armée|false si non armé, true sinon
+$VIRT_PART_ALERTE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en alerte|false
+$VIRT_PART_TROUBLE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en défaut|false
+$VIRT_PART_PRETE__TAB|Tableau de nom spécifiant pour chaque partition si elle est prête pour l'armement|true. false peut simplement signifier qu'une porte avec détecteur d'ouverture est ouverte
+$VIRT_PART_INCENDIE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en alarme incendie|false
