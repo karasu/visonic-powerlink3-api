@@ -1,0 +1,1083 @@
+{
+	"info": {
+		"_postman_id": "95d6a7a9-3773-4d4a-9906-bc9a5bc949db",
+		"name": "Alarme",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "commands list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"{{ip_client}}\", {{code_utilisateur}}, \"user\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/registerClient\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLogHistory",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"\", \"\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getLogHistory\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDeviceStatuses",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [10,1],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getDeviceStatuses\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDeviceConfig",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [10,1],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getDeviceConfig\",\n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserCodes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"{{code_utilisateur}}\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getUserCodes\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserCode",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"{{code_utilisateur}}\",1],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getUserCode\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getInstallerCode",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"{{code_utilisateur}}\",1],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getUserCode\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDateTime",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getDateTime\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getDate\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLogHistory",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"\", \"\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getLogHistory\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "isPanelConnected",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/isPanelConnected\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getApiVersion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getApiVersion\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getBatteryLevel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getBatteryLevel\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getConnexionType",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getConnectionType\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGsmLevel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getGsmLevel\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTagsInfo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getTagsInfo\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPanelStatuses",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getPanelStatuses\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPanelState",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [3],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getPanelState\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPanelConfig",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getPanelConfig\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLocationsList",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getLocationsList\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLocation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [6],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getLocation\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLocationInfo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getLocationInfo\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMaxDevices",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getMaxDevices\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMaxDevice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [18],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getMaxDevice\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEepromVersion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getEepromVersion\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPowerGDeviceProperty TIMEOUT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [1,1,1,1],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getPowerGDeviceProperty\",\n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEepromItem TIMEOUT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [3,1,2],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getEepromItem\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWlanConfig NOT SUPPORTED",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"{{code_utilisateur}}\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getWlanConfig\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWlanScanResults ERREUR",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getWlanScanResults\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWlanapConfig NOT SUPPORTED",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"{{code_utilisateur}}\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getWlanapConfig\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "isWPSEnabled NOT SUPPORTED",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/isWPSEnabled\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pmaxDownload  Not supported NOW",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [1,\"\", 21],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/pmaxDownload\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pmaxLogin Not supported NOW",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": [\"{{code_utilisateur}}\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/pmaxLogin\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceLed NOT SUPPORTED",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getServiceLed\", \n\t\"id\":1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/remote/json-rpc",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"remote",
+						"json-rpc"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
