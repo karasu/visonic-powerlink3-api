@@ -34,6 +34,10 @@ $CODE_ALARME = '0000';
 // Nombre d'erreurs générées par l'appel du scénario
 $VIRT_ERRORS_NUMBER="#[Alarme][Visonic][nombreErreurs]#";
 
+// Erreur during the scenario execution? 
+// Erreur durant l'execution du scenario ?
+$VIRT_ERRORS_EXECUTION_SCENARIO="#[Alarme][Visonic][erreurSurDernierAppel]#";
+
 // Battery level
 // Niveau de la batterie
 $VIRT_BATTERY_LEVEL="#[Alarme][Visonic][batterie]#";
@@ -91,7 +95,7 @@ $PORT_ALARME = '8181';
 //  FIN DE PARTIE A SPECIALISER
 // **********************************************************************
 
-
+cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(false);
 
 // Registration du client
 // ----------------------
@@ -123,6 +127,7 @@ curl_close($curl);
 
 if ($err || strpos($response, 'error') !== false) {
   cmd::byString($VIRT_ERRORS_NUMBER)->event(cmd::byString($VIRT_ERRORS_NUMBER)->execCmd()+1);
+  cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(true);
   //log::add('visonic', 'error', 'registerClient - entrée : '.$curl);
   log::add('visonic', 'error', 'registerClient - réponse : '.$response);
   if ($err != '') {
@@ -166,8 +171,8 @@ $err = curl_error($curl);
 curl_close($curl);
 
 if ($err || strpos($response, 'error') !== false) {
-
   cmd::byString($VIRT_ERRORS_NUMBER)->event(cmd::byString($VIRT_ERRORS_NUMBER)->execCmd()+1);
+  cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(true);
   log::add('visonic', 'error', 'getBatteryLevel - réponse : '.$response);
   if ($err != '') {
     log::add('visonic', 'error', 'getBatteryLevel - erreur : '.$err);
@@ -217,6 +222,7 @@ curl_close($curl);
 if ($err || strpos($response, 'error') !== false) {
   //log::add('visonic', 'error', 'getGsmLevel - entrée : '.$curl);
   cmd::byString($VIRT_ERRORS_NUMBER)->event(cmd::byString($VIRT_ERRORS_NUMBER)->execCmd()+1);
+  cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(true);
   log::add('visonic', 'error', 'getGsmLevel - réponse : '.$response);
   if ($err != '') {
     log::add('visonic', 'error', 'getGsmLevel - erreur : '.$err);
@@ -267,6 +273,7 @@ curl_close($curl);
 if ($err || strpos($response, 'error') !== false) {
   //log::add('visonic', 'error', 'isPanelConnected - entrée : '.$curl);
   cmd::byString($VIRT_ERRORS_NUMBER)->event(cmd::byString($VIRT_ERRORS_NUMBER)->execCmd()+1);
+  cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(true);
   log::add('visonic', 'error', 'isPanelConnected - réponse : '.$response);
   if ($err != '') {
     log::add('visonic', 'error', 'isPanelConnected - erreur : '.$err);
@@ -317,6 +324,7 @@ curl_close($curl);
 if ($err || strpos($response, 'error') !== false) {
   //log::add('visonic', 'error', 'getPanelStatuses - entrée : '.$curl);
   cmd::byString($VIRT_ERRORS_NUMBER)->event(cmd::byString($VIRT_ERRORS_NUMBER)->execCmd()+1);
+  cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(true);
   log::add('visonic', 'error', 'getPanelStatuses - réponse : '.$response);
   if ($err != '') {
     log::add('visonic', 'error', 'getPanelStatuses - erreur : '.$err);
