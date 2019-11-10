@@ -46,7 +46,7 @@ Il faut ensuite spécialiser les informations présentes en début de fichier :
 |--|--|
 |$IP_JEEDOM|Mettre l'ip de la machine hébergeant votre jeedom. Attention, utiliser automatiquement l'IP, pas de nom DNS  |
 |$IP_ALARME|Mettre l'ip ou le nom DNS de votre alarme|
-|$CODE_ALARME|Mettre le code utilisateur de l'alarme, c'est à dire le code que vous utilisez pour l'armer ou la désarmer. **Attention : l'API exposée est en http (et pas https), ce code va donc notamment circuler en clair sur votre réseau**
+|$CODE_ALARME|Mettre le code utilisateur de l'alarme, c'est à dire le code que vous utilisez pour l'armer ou la désarmer. **Attention : l'API exposée est en http (et pas https), ce code va donc notamment circuler en clair sur votre réseau**|
 |$PORT_ALARME|Le port de l'api de l'alarme. Normalement ne devrait pas être modifié (8181)|
 
 Et spécialiser les variables php contenant le nom des infos du virtuel à renseigner. Le format est celui jeddom habituel : `#[Nom de l'objet parent][Nom de l'objet][Nom de la zone d'information]#` exemple : `#[Alarme][Visonic][nombreErreurs]#`
