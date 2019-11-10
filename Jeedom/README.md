@@ -54,7 +54,7 @@ Et spécialiser les variables php contenant le nom des infos du virtuel à rense
 Nom de la variable php|escription de la zone du virtuel|Type et valeur normale
 --|--|--
 $VIRT_ERRORS_NUMBER|Nom de l'information Nombre d'erreurs générées par l'appel du scénario. Ce compteur est remis à 0 à chaque appel réussi|0
-$VIRT_ERRORS_NUMBER|Nom de l'information Nombre d'erreurs générées par l'appel du scénario. Ce compteur est remis à 0 à chaque appel réussi|0
+$VIRT_ERRORS_EXECUTION_SCENARIO|Indicateur permettant de connaitre s'il y a eu une erreur lors de l'exécution du scenario. Réinitialisé à chaque appel|false
 $VIRT_BATTERY_LEVEL|Niveau de la batterie interne de l'alarme en % |100
 $VIRT_GSM_LEVEL| Niveau de reception de la carte GPRS ou 3G en %|Numérique. Dépend de votre niveau de réception
 $VIRT_ALARM_CONNECTED|Alarme connectée ou non ?|true
