@@ -95,6 +95,24 @@ $PORT_ALARME = '8181';
 //  FIN DE PARTIE A SPECIALISER
 // **********************************************************************
 
+function prepareJsonRpcCall(&$curl, $fonction) {
+  curl_setopt_array($curl, array(
+    CURLOPT_PORT => $PORT_ALARME,
+    CURLOPT_URL => "http://".$IP_ALARME.":".$PORT_ALARME."/remote/json-rpc",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => "{\n\t\"params\": [\"".$IP_JEEDOM."\", ".$CODE_ALARME.", \"user\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"".$fonction."\", \n\t\"id\":1\n}",
+    CURLOPT_HTTPHEADER => array(
+      "Content-Type: application/json"
+    ),
+  ));
+  return $curl;
+
+
 cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(false);
 
 // Registration du client
@@ -102,23 +120,7 @@ cmd::byString($VIRT_ERRORS_EXECUTION_SCENARIO)->event(false);
 log::add('visonic', 'debug', 'registerClient - lancement...');
 
 $curl = curl_init();
-//$curl=prepareJsonRpcCall("PmaxService/registerClient", $curl);
-
-
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => $PORT_ALARME,
-  CURLOPT_URL => "http://".$IP_ALARME.":".$PORT_ALARME."/remote/json-rpc",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "{\n\t\"params\": [\"".$IP_JEEDOM."\", ".$CODE_ALARME.", \"user\"],\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/registerClient\", \n\t\"id\":1\n}",
-  CURLOPT_HTTPHEADER => array(
-    "Content-Type: application/json"
-  ),
-));
+$curl=prepareJsonRpcCall("PmaxService/registerClient", $curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -148,22 +150,7 @@ log::add('visonic', 'debug', 'registerClient - réponse :'.$response);
 log::add('visonic', 'debug', 'getBatteryLevel - lancement...');
 
 $curl = curl_init();
-//$curl=prepareJsonRpcCall("PmaxService/getBatteryLevel", curl_init());
-
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => $PORT_ALARME,
-  CURLOPT_URL => "http://".$IP_ALARME.":".$PORT_ALARME."/remote/json-rpc",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getBatteryLevel\", \n\t\"id\":1\n}",
-  CURLOPT_HTTPHEADER => array(
-    "Content-Type: application/json"
-  ),
-));
+$curl=prepareJsonRpcCall("PmaxService/getBatteryLevel", curl_init());
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -197,22 +184,7 @@ else {
 log::add('visonic', 'debug', 'getGsmLevel - lancement...');
 
 $curl = curl_init();
-//$curl=prepareJsonRpcCall("PmaxService/getGsmLevel", $curl);
-
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => $PORT_ALARME,
-  CURLOPT_URL => "http://".$IP_ALARME.":".$PORT_ALARME."/remote/json-rpc",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getGsmLevel\", \n\t\"id\":1\n}",
-  CURLOPT_HTTPHEADER => array(
-    "Content-Type: application/json"
-  ),
-));
+$curl=prepareJsonRpcCall("PmaxService/getGsmLevel", $curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -248,22 +220,7 @@ else {
 log::add('visonic', 'debug', 'isPanelConnected - lancement...');
 
 $curl = curl_init();
-//$curl=prepareJsonRpcCall("PmaxService/isPanelConnected", $curl);
-
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => $PORT_ALARME,
-  CURLOPT_URL => "http://".$IP_ALARME.":".$PORT_ALARME."/remote/json-rpc",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/isPanelConnected\", \n\t\"id\":1\n}",
-  CURLOPT_HTTPHEADER => array(
-    "Content-Type: application/json"
-  ),
-));
+$curl=prepareJsonRpcCall("PmaxService/isPanelConnected", $curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
@@ -299,22 +256,7 @@ else {
 log::add('visonic', 'debug', 'getPanelStatuses - lancement...');
 
 $curl = curl_init();
-//$curl=prepareJsonRpcCall("PmaxService/getPanelStatuses", $curl);
-
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => $PORT_ALARME,
-  CURLOPT_URL => "http://".$IP_ALARME.":".$PORT_ALARME."/remote/json-rpc",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS => "{\n\t\"params\": null,\n\t\"jsonrpc\": \"2.0\",\n\t\"method\": \"PmaxService/getPanelStatuses\", \n\t\"id\":1\n}",
-  CURLOPT_HTTPHEADER => array(
-    "Content-Type: application/json"
-  ),
-));
+$curl=prepareJsonRpcCall("PmaxService/getPanelStatuses", $curl);
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
