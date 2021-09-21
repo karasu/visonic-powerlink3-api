@@ -1,4 +1,5 @@
 
+
 # Informations sur l'API exposée par le powermaster 3
 
 Le power master 3 expose une API JSON RPC sur le port 8181.
@@ -65,8 +66,77 @@ Appel : GET http://{{ip}}:{{port}}/remote/json-rpc
 Retour : La liste des ressources disponibles
 Erreurs : Aucune connue
 
-TODO
 
 ## Postman de test
 La collection postman du repository contient un ensemble de tests non exhaustifs.
 Il est nécessaire de la spécialiser en modifiant les valeurs de la partie environnement du postman.
+
+
+## FAQ
+
+### Quelle est l'url de l'API ?
+
+    http://{{ip}}:8181/remote/json-rpc
+
+### Comment lancer un appel vers l'API de l'alarme ?
+Il faut commencer par enregistrer la machine appelante via l'appel de registerClient
+
+Exemple : 
+
+    POST /remote/json-rpc HTTP/1.1
+    Host: {{ip}}:8181
+    Content-Type: application/json
+    Content-Length: 116
+    
+    {
+    	"params": ["{{ip_machine_appelante}}", {{code_alarme}}, "user"],
+    	"jsonrpc": "2.0",
+    	"method": "PmaxService/registerClient", 
+    	"id":1
+    }
+
+avec : 
+{{ip}} : l'ip de l'alarme
+{{ip_machine_appelante}} : l'ip de la machine appelante. **METTRE OBLIGATOIREMENT UNE IP, PAS DE DNS**
+{{code_alarme}} : le code à 4 chiffres pour activer l'alarme. Rq : Je ne sais pas comment sont gérés les codes commençant par 0. Il faudrait essayer de mettre des " si ça ne passe pas. 
+
+### Récupérer les infos de la centrale ###
+Faire un appel sur getPanelStatuses.
+Exemple : 
+
+    POST /remote/json-rpc HTTP/1.1
+    Host: {{ip}}:8181
+    Content-Type: application/json
+    Content-Length: 91
+    
+    {
+    	"params": null,
+    	"jsonrpc": "2.0",
+    	"method": "PmaxService/getPanelStatuses", 
+    	"id":1
+    }
+
+### Armer / désarmer une zone ###
+Faire un appel sur PmaxService/setPanelState
+Exemple : 
+
+    POST /setPanelState HTTP/1.1
+    Host: {{ip}}:8181
+    Content-Type: text/plain
+    Content-Length: 136
+    
+    {
+        "params": ["{{code_alarme}}", "{{etat}}", {{partition}}, true, true],
+        "jsonrpc": "2.0",
+        "method": "PmaxService/setPanelState", 
+        "id":1
+    }
+avec : 
+{{code_alarme}} : le code à 4 chiffres pour activer l'alarme. 
+{{etat}} : l'état de l'alarme que l'on veut activer : "AWAY", "HOME" (armement partiel) ou "DISARM"
+{{partition}} ; le numéro de la partition : 1, 2 ou 3
+Rq : je ne sais pas le faire sur une alarme non zonée
+
+
+### C'est quoi l'id dans les appels
+cf https://www.jsonrpc.org/specification
