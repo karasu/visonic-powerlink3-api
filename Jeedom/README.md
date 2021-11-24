@@ -1,68 +1,150 @@
-# Utilisation dans jeedom
-Ce répertoire contient une utilisation de l'API pour jeedom. 
-Le code moche (je ne connais pas le php...). Il est fourni pour le principe mais devrait fonctionner ailleurs. 
-
-**Attention, lire avant toute chose le paragraphe sur la sécurité, l'activation de l'api et les problèmes connus dans [le README de l'API](https://github.com/Froggy-AA/visonic-powerlink3-api/blob/master/api/README.md)**
-
-## Principe
-Le mode de fonctionnement est basé sur un scenario ([source](https://github.com/Froggy-AA/visonic-powerlink3-api/blob/master/Jeedom/visonic.php)) qui va renseigner les données d'un objet virtuel. 
-
-Le scénario va appeler ces ressources de l'API du powerlink : 
- - PmaxService/registerClient pour l'enregistrement de la machine jeedom
- - PmaxService/getBatteryLevel pour le niveau de batterie de l'alarme
- - PmaxService/getGsmLevel pour le niveau de réception de la carte GRPS ou 3G de l'alarme
- - PmaxService/isPanelConnected pour connaitre le status de connexion de l'alarme
- - PmaxService/getPanelStatuses pour les autres information sur l'alarme et les informations sur les partitions
-
-Il est possible de commenter l'un de ces appels si par exemple vous n'avez pas de carte GPRS ou 3G. 
-
-Aucun appel n'est effectué sur internet. C'est le module powerlink visonic qui retourne les informations.
-
-## Pre-requis
-Ce scénario part du principe que la gestion des partitions a été activée sur l'alarme.
-Il faut selon les versions de l'alarme activer l'API du powerlink.
-
-## Scénario
-
-Commencer par créer un scénario. 
-
-Dans l'onglet *Général* :
-
-Renseigner les infos habituelles. Deux points d'attention : 
-
- 1. Timeout
- Il faut lui attribuer un timeout plus court que la fréquence d'ordonnancement. Concrètement, pour un ordonnancement toutes les minutes, le time out doit être de 59000. 
- 2. Le mode de déclanchement
- Pour récupérer les informations régulièrement et automatiquement, mettre le *mode du scénario* à `Programmé` et la *Programmation* à `* * * * *` pour le lancer toutes les minutes par exemple.
 
 
-Dans l'onglet *Scénario* :
+# Informations sur l'API exposée par la centrale
 
-Ajouter un bloc de type *Code* et y copier le code du scenario du fichier [visonic.php](https://github.com/Froggy-AA/visonic-powerlink3-api/blob/master/Jeedom/visonic.php)
+Les centrales visonic équipées de powerlink 3 expose une API JSON RPC sur le port 8181.
+Cette API n'est pas documentée. L'objectif de ce repository est de rassembler les informations à ce propos. Le powerlink 3 fonctionne différemment des versions précédentes. Ce qui suit est donc spécifique à cette version. 
 
-Il faut ensuite spécialiser les informations présentes en début de fichier : 
+**ATTENTION : Lire de manière attentive les informations relatives à la sécurité**
 
-Nom de la variable php| Signification 
---|--
-$IP_JEEDOM|Mettre l'ip de la machine hébergeant votre jeedom. Attention, utiliser automatiquement l'IP, pas de nom DNS  
-$IP_ALARME|Mettre l'ip ou le nom DNS de votre alarme
-$CODE_ALARME|Mettre le code utilisateur de l'alarme, c'est à dire le code que vous utilisez pour l'armer ou la désarmer. **Attention : l'API exposée est en http (et pas https), ce code va donc notamment circuler en clair sur votre réseau**
-$PORT_ALARME|Le port de l'api de l'alarme. Normalement ne devrait pas être modifié (8181)
 
-Et spécialiser les variables php contenant le nom des infos du virtuel à renseigner. Le format est celui jeddom habituel : `#[Nom de l'objet parent][Nom de l'objet][Nom de la zone d'information]#` exemple : `#[Alarme][Visonic][nombreErreurs]#`
+## Compatibilité
 
-Nom de la variable php|escription de la zone du virtuel|Type et valeur normale
---|--|--
-$VIRT_ERRORS_NUMBER|Nom de l'information Nombre d'erreurs générées par l'appel du scénario. Ce compteur est remis à 0 à chaque appel réussi|0
-$VIRT_ERRORS_EXECUTION_SCENARIO|Indicateur permettant de connaitre s'il y a eu une erreur lors de l'exécution du scenario. Réinitialisé à chaque appel|false
-$VIRT_BATTERY_LEVEL|Niveau de la batterie interne de l'alarme en % |100
-$VIRT_GSM_LEVEL| Niveau de reception de la carte GPRS ou 3G en %|Numérique. Dépend de votre niveau de réception
-$VIRT_ALARM_CONNECTED|Alarme connectée ou non ?|true
-$VIRT_AC_TROUBLE|Alerte sur un problème d'alimentation électrique|false
-$VIRT_LOW_BATTERY|Alerte de l'alarme sur un niveau de battterie faible sur l'alarme. En lien direct avec $VIRT_BATTERY_LEVEL mais le flag d'alerte est géré par l'alarme|false
-$VIRT_COMMUNICATION_FAILURE|Alerte de l'alarme sur un défaut de communication|false
-$VIRT_PART_ARMEE__TAB|Tableau de nom spécifiant pour chaque partition si elle est armée|false si non armé, true sinon
-$VIRT_PART_ALERTE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en alerte|false
-$VIRT_PART_TROUBLE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en défaut|false
-$VIRT_PART_PRETE__TAB|Tableau de nom spécifiant pour chaque partition si elle est prête pour l'armement|true. false peut simplement signifier qu'une porte avec détecteur d'ouverture est ouverte
-$VIRT_PART_INCENDIE__TAB|Tableau de nom spécifiant pour chaque partition si elle est en alarme incendie|false
+Après tests, la fonction est disponible sur les Powermaster 30 et 33 EXP G2 avec un firmware en version 19 ou 20.
+
+## Sécurité
+
+Voici la liste des problèmes de sécurité identifiés. D'autres problèmes peuvent exister mais ne pas être listés ici.
+
+### HTTP
+L'API n'est exposée qu'en http. Il n'y a pas de port https exposé. De ce fait, toutes les informations transmises entre l'alarme et le client sont en clair sur le réseau et peuvent donc être interceptées et utilisées par toute personne ayant accès au réseau sur lequel le powerlink est connecté.
+
+### Code utilisateur
+Pour fonctionner l'alarme impose un appel pour l'enregistrement du client. Cet appel nécessite de transmettre le code utilisateur, c'est à dire permettant d'armer ou de désarmer l'alarme. Ce code est donc transporté en clair.
+De plus, si une personne accède à la machine enregistrée, elle peut utiliser l'API sans avoir besoin du code utilisateur.
+
+Il **semble** que la ressource d’enregistrement ne soit pas protégée contre une attaque consistant à tester un par un tous les codes possibles. 
+
+### Internet
+Il est plus que conseillé de bloquer les accès entrant externes vers le port 8181 de l'alarme. Cela permet de minimiser les risques d'attaque provenant d'internet. 
+
+
+
+## Problèmes connus
+
+### Timeout
+Je ne sais pas si ce problème est spécifique à mon installation mais dans certains cas, l'api ne répond plus, notamment via un time out client ou par un retour en erreur de la ressource spécifiant un time out.
+En l'état, l'utilisation de l'api n'est pas fiable.
+
+### IP enregistrées
+Une seule IP ne peut être enregistrée à un instant donné. On ne peut pas "dé-enregistrer" une ip, on peut juste en enregistrer une autre en remplacement. 
+L'ip enregistrée a une durée de vie de quelques jours.
+
+## Utilisation
+
+L'API exposée est en JSON RPC. Se référer [aux spécifications](https://www.jsonrpc.org/specification).
+L'utilisation nécessite avant toute chose l'appel à la ressource PmaxService/registerClient. Cela permet d'enregistrer une ip pour l'utilisation de l'API.
+Une fois le client enregistré, il est possible de faire appel aux ressources.
+
+
+## Erreurs
+Liste des erreurs courantes
+
+TODO
+
+## Ressources
+
+Dans ce qui suit, les variables sur {{entre accolades}}. 
+
+ - ip : l'ip de l'alarme ou son non DNS
+ - port : port http de l'api : 8181
+
+
+### Liste des commandes
+C'est la seule ressource qui n'est pas JSON RPC.
+Enregistrement du client nécessaire : non
+Appel : GET http://{{ip}}:{{port}}/remote/json-rpc
+Retour : La liste des ressources disponibles
+Erreurs : Aucune connue
+
+
+## Postman de test
+La collection postman du repository contient un ensemble de tests non exhaustifs.
+Il est nécessaire de la spécialiser en modifiant les valeurs de la partie environnement du postman.
+
+
+## Récupération des images
+
+Pour récupérer les images issues des détecteurs équipés de caméra, il faut l'activer via le mode installateur dans les menus : 
+03: Centrale  -> 80: DOM. TIER. PART -> activer
+Cela permet d'ouvrir le port 21 accessible en FTP anonnyme 
+
+
+## FAQ
+
+### Quelle est l'url de l'API ?
+
+    http://{{ip}}:8181/remote/json-rpc
+
+### Comment lancer un appel vers l'API de l'alarme ?
+Il faut commencer par enregistrer la machine appelante via l'appel de registerClient
+
+Exemple : 
+
+    POST /remote/json-rpc HTTP/1.1
+    Host: {{ip}}:8181
+    Content-Type: application/json
+    Content-Length: 116
+    
+    {
+    	"params": ["{{ip_machine_appelante}}", {{code_alarme}}, "user"],
+    	"jsonrpc": "2.0",
+    	"method": "PmaxService/registerClient", 
+    	"id":1
+    }
+
+avec : 
+{{ip}} : l'ip de l'alarme
+{{ip_machine_appelante}} : l'ip de la machine appelante. **METTRE OBLIGATOIREMENT UNE IP, PAS DE DNS**
+{{code_alarme}} : le code à 4 chiffres pour activer l'alarme. Rq : Je ne sais pas comment sont gérés les codes commençant par 0. Il faudrait essayer de mettre des " si ça ne passe pas. 
+
+### Récupérer les infos de la centrale ###
+Faire un appel sur getPanelStatuses.
+Exemple : 
+
+    POST /remote/json-rpc HTTP/1.1
+    Host: {{ip}}:8181
+    Content-Type: application/json
+    Content-Length: 91
+    
+    {
+    	"params": null,
+    	"jsonrpc": "2.0",
+    	"method": "PmaxService/getPanelStatuses", 
+    	"id":1
+    }
+
+### Armer / désarmer une zone ###
+Faire un appel sur PmaxService/setPanelState
+Exemple : 
+
+    POST /setPanelState HTTP/1.1
+    Host: {{ip}}:8181
+    Content-Type: text/plain
+    Content-Length: 136
+    
+    {
+        "params": ["{{code_alarme}}", "{{etat}}", {{partition}}, true, true],
+        "jsonrpc": "2.0",
+        "method": "PmaxService/setPanelState", 
+        "id":1
+    }
+avec : 
+{{code_alarme}} : le code à 4 chiffres pour activer l'alarme. 
+{{etat}} : l'état de l'alarme que l'on veut activer : "AWAY", "HOME" (armement partiel) ou "DISARM"
+{{partition}} ; le numéro de la partition : 1, 2 ou 3
+Rq : je ne sais pas le faire sur une alarme non zonée
+
+
+### C'est quoi l'id dans les appels
+cf https://www.jsonrpc.org/specification
