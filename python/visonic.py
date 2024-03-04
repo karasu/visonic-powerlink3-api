@@ -1,9 +1,8 @@
 """ Python module to call RPC visonic api """
 
-import json
-import socket
-
-BUFFER_SIZE = 1024
+import xmlrpc.client
+#import json
+#import socket
 
 VISONIC_INFO = {
     "ip": "192.168.1.1",
@@ -13,84 +12,72 @@ VISONIC_INFO = {
     "client_ip": "192.168.1.2",
 }
 
-class RPCClient:
-    """ Class to make RPC calls """
-    
-    def __init__(self, host:str='localhost', port:int=8080) -> None:
-        self.__sock = None
-        self.__address = (host, port)
+METHODS = {
+    "log_history": "getLogHistory",
+    "device_statuses": "getDeviceStatuses",
+    "device_config": "getDeviceConfig",
+    "user_codes": "getUserCodes",
+    "user_code": "getUserCode",
+    "installer_code": "getInstallerCode",
+    "date_time": "getDateTime",
+    "date": "getDate",
+    "api_version": "getApiVersion",
+    "battery_level": "getBatteryLevel",
+    "connexion_type": "getConnexionType",
+    "gsm_level": "getGsmLevel",
+    "tags_info": "getTagsInfo",
+    "panel_statuses": "getPanelStatuses",
+    "panel_state": "getPanelState",
+    "panel_config": "getPanelConfig",
+    "locations_list": "getLocationsList",
+    "location": "getLocation",
+    "location_info": "getLocationInfo",
+    "max_devices": "getMaxDevices",
+    "max_device": "getMaxDevice",
+    "eeprom_version": "getEepromVersion",
 
-    def is_connected(self):
-        """ Check if we are connected to server """
-        try:
-            self.__sock.sendall(b'test')
-            self.__sock.recv(BUFFER_SIZE)
-            return True
-        except OSError:
-            return False
+    ##########################################
 
-    def connect(self):
-        """ Connect to RPC server """
-        try:
-            self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.__sock.connect(self.__address)
-        except EOFError as exc:
-            print(exc)
-            raise EOFError('Client was not able to connect.') from exc
+    "power_GDevice_property": "getPowerGDeviceProperty",
+    "eeprom_item": "getEepromItem",
+    "wlan_config": "getWlanConfig",
+    "wlan_scan_results": "getWlanScanResults",
+    "wlanap_config": "getWlanapConfig",
+    "service_led": "getServiceLed",
+}
 
-    def disconnect(self):
-        """ Close connection """
-        try:
-            self.__sock.close()
-        except OSError:
-            pass
-
-    def __getattr__(self, __name: str):
-        def excecute(*args, **kwargs):
-            self.__sock.sendall(json.dumps((__name, args, kwargs)).encode())
-            response = json.loads(self.__sock.recv(SIZE).decode())
-            return response
-        return excecute
-
-    def __del__(self):
-        try:
-            self.__sock.close()
-        except OSError:
-            pass
-
-class VisonicClient(RPCClient):
+class VisonicClient():
     """ Class to call Visonic RPC commands """
-    def __init__(self, host):
-        super().__init__(host=VISONIC_INFO['ip'], port=VISONIC_INFO['port'])
-    
+
+    def __init__(self):
+        url = f"http://{VISONIC_INFO['ip']}:{VISONIC_INFO['port']}/remote/json-rpc"
+        print(url)
+        self.server = xmlrpc.client.ServerProxy(url)
+        print(self.server.system.listMethods())
+
     def register_client(self):
         pass
-
-    def get_log_history(self):
+    def is_panel_connected(self):
+        pass
+    def is_WPS_enabled(self):
         pass
 
-    getDeviceStatuses
-    getDeviceConfig
-    getUserCodes
-    getUserCode
-    getInstallerCode
-    getDateTime
-    getDate
-    getLogHistory
-    isPanelConnected
-    getApiVersion
-    getBatteryLevel
-    getConnexionType
-    getGsmLevel
-    getTagsInfo
-    getPanelStatuses
-    getPanelState
-    getPanelConfig
-    getLocationsList
-    getLocation
-    getLocationInfo
-    getMaxDevices
-    getMaxDevice
-    
+    def pmax_download(self):
+        pass
+
+    def pmax_login(self):
+        pass
+
+    def get(self, method):
+        """ Calls RPC getMethod method """
+        method = METHODS.get(method, None)
+        if method:
+            func = getattr(self.server('https://example.com/rpc'), method)
+            print(func())
+        else:
+            print("method %s unknown", method)
 
 
+vc = VisonicClient()
+vc.register_client()
+print(vc.get("device_statuses"))
