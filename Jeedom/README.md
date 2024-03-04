@@ -1,95 +1,84 @@
 
 
-# Informations sur l'API exposée par la centrale
+# API information exposed by the central
 
-Les centrales visonic équipées de powerlink 3 expose une API JSON RPC sur le port 8181.
-Cette API n'est pas documentée. L'objectif de ce repository est de rassembler les informations à ce propos. Le powerlink 3 fonctionne différemment des versions précédentes. Ce qui suit est donc spécifique à cette version. 
+Visonic control panels equipped with powerlink 3 expose a JSON RPC API on port 8181.
+This API is not documented. The objective of this repository is to gather information on this subject. The powerlink 3 works differently from previous versions. The following is therefore specific to this version.
 
-**ATTENTION : Lire de manière attentive les informations relatives à la sécurité**
+**CAUTION: Read the safety information carefully**
 
 
-## Compatibilité
+## Compatibility
 
-Après tests, la fonction est disponible sur les Powermaster 30 et 33 EXP G2 avec un firmware en version 19 ou 20.
+After testing, the function is available on the Powermaster 30 and 33 EXP G2 with firmware version 19 or 20.
 
-## Sécurité
+## Security
 
-Voici la liste des problèmes de sécurité identifiés. D'autres problèmes peuvent exister mais ne pas être listés ici.
+Here is the list of security issues identified. Other problems may exist but are not listed here.
 
 ### HTTP
-L'API n'est exposée qu'en http. Il n'y a pas de port https exposé. De ce fait, toutes les informations transmises entre l'alarme et le client sont en clair sur le réseau et peuvent donc être interceptées et utilisées par toute personne ayant accès au réseau sur lequel le powerlink est connecté.
+The API is only exposed in http. There is no exposed https port. As a result, all information transmitted between the alarm and the client is in the clear on the network and can therefore be intercepted and used by anyone with access to the network to which the powerlink is connected.
 
-### Code utilisateur
-Pour fonctionner l'alarme impose un appel pour l'enregistrement du client. Cet appel nécessite de transmettre le code utilisateur, c'est à dire permettant d'armer ou de désarmer l'alarme. Ce code est donc transporté en clair.
-De plus, si une personne accède à la machine enregistrée, elle peut utiliser l'API sans avoir besoin du code utilisateur.
+### User code
+To operate the alarm requires a call for customer registration. This call requires transmitting the user code, i.e. allowing you to arm or disarm the alarm. This code is therefore transported in clear text.
+Additionally, if someone accesses the registered machine, they can use the API without needing the user code.
 
-Il **semble** que la ressource d’enregistrement ne soit pas protégée contre une attaque consistant à tester un par un tous les codes possibles. 
+It **seems** that the recording resource is not protected against an attack consisting of testing all possible codes one by one.
 
 ### Internet
-Il est plus que conseillé de bloquer les accès entrant externes vers le port 8181 de l'alarme. Cela permet de minimiser les risques d'attaque provenant d'internet. 
-
-
+It is highly recommended to block external incoming access to port 8181 of the alarm. This helps minimize the risk of attack from the internet.
 
 ## Problèmes connus
 
 ### Timeout
-Je ne sais pas si ce problème est spécifique à mon installation mais dans certains cas, l'api ne répond plus, notamment via un time out client ou par un retour en erreur de la ressource spécifiant un time out.
-En l'état, l'utilisation de l'api n'est pas fiable.
+I don't know if this problem is specific to my installation but in certain cases, the API no longer responds, in particular via a client timeout or by an error return from the resource specifying a timeout.
+As it stands, using the API is unreliable.
 
-### IP enregistrées
-Une seule IP ne peut être enregistrée à un instant donné. On ne peut pas "dé-enregistrer" une ip, on peut juste en enregistrer une autre en remplacement. 
-L'ip enregistrée a une durée de vie de quelques jours.
+### Registered IPs
+Only one IP can be registered at any given time. You cannot "de-register" an IP, you can just register another one as a replacement.
+The registered IP has a lifespan of a few days.
 
-## Utilisation
+## Usage
 
-L'API exposée est en JSON RPC. Se référer [aux spécifications](https://www.jsonrpc.org/specification).
-L'utilisation nécessite avant toute chose l'appel à la ressource PmaxService/registerClient. Cela permet d'enregistrer une ip pour l'utilisation de l'API.
-Une fois le client enregistré, il est possible de faire appel aux ressources.
+The exposed API is in JSON RPC. Refer to [specification](https://www.jsonrpc.org/specification).
+Use requires, first of all, a call to the PmaxService/registerClient resource. This allows you to register an IP for API use.
+Once the client is registered, it is possible to call on the resources.
 
-
-## Erreurs
-Liste des erreurs courantes
-
+## Errors
+List of common errors
 TODO
 
 ## Ressources
+In the following, variables on {{in curly brackets}}.
 
-Dans ce qui suit, les variables sur {{entre accolades}}. 
+  - ip: the ip of the alarm or its non-DNS
+  - port: api http port: 8181
 
- - ip : l'ip de l'alarme ou son non DNS
- - port : port http de l'api : 8181
+### Command list
 
+This is the only resource that is not JSON RPC.
+Customer registration required: no
+Call: GET http://{{ip}}:{{port}}/remote/json-rpc
+Back: The list of available resources
+Errors: None known
 
-### Liste des commandes
-C'est la seule ressource qui n'est pas JSON RPC.
-Enregistrement du client nécessaire : non
-Appel : GET http://{{ip}}:{{port}}/remote/json-rpc
-Retour : La liste des ressources disponibles
-Erreurs : Aucune connue
+## Image recovery
 
-
-## Postman de test
-La collection postman du repository contient un ensemble de tests non exhaustifs.
-Il est nécessaire de la spécialiser en modifiant les valeurs de la partie environnement du postman.
-
-
-## Récupération des images
-
-Pour récupérer les images issues des détecteurs équipés de caméra, il faut l'activer via le mode installateur dans les menus : 
-03: Centrale  -> 80: DOM. TIER. PART -> activer
-Cela permet d'ouvrir le port 21 accessible en FTP anonnyme 
-
+To retrieve images from detectors equipped with cameras, you must activate it via installer mode in the menus:
+03: Central -> 80: DOM. TIER. PART -> activate
+This allows you to open port 21 accessible in anonymous FTP
 
 ## FAQ
 
-### Quelle est l'url de l'API ?
+### What is the API URL?
 
     http://{{ip}}:8181/remote/json-rpc
 
-### Comment lancer un appel vers l'API de l'alarme ?
-Il faut commencer par enregistrer la machine appelante via l'appel de registerClient
+### How to make a call to the alarm API?
 
-Exemple : 
+You must start by registering the calling machine via the registerClient call
+
+Example : 
 
     POST /remote/json-rpc HTTP/1.1
     Host: {{ip}}:8181
@@ -103,14 +92,15 @@ Exemple :
     	"id":1
     }
 
-avec : 
-{{ip}} : l'ip de l'alarme
-{{ip_machine_appelante}} : l'ip de la machine appelante. **METTRE OBLIGATOIREMENT UNE IP, PAS DE DNS**
-{{code_alarme}} : le code à 4 chiffres pour activer l'alarme. Rq : Je ne sais pas comment sont gérés les codes commençant par 0. Il faudrait essayer de mettre des " si ça ne passe pas. 
+with : 
+{{ip}} : alarm ip
+{{ip_machine_appelante}} : the IP of the calling machine. **MUST PUT AN IP, NO DNS**
+{{alarm_code}}: the 4-digit code to activate the alarm. Rq: I don't know how codes starting with 0 are managed. You should try to put " if that doesn't work.
 
-### Récupérer les infos de la centrale ###
-Faire un appel sur getPanelStatuses.
-Exemple : 
+### Retrieve information from the control unit ###
+
+Make a call on getPanelStatuses.
+Example : 
 
     POST /remote/json-rpc HTTP/1.1
     Host: {{ip}}:8181
@@ -124,8 +114,8 @@ Exemple :
     	"id":1
     }
 
-### Armer / désarmer une zone ###
-Faire un appel sur PmaxService/setPanelState
+### Arm/disarm a zone ###
+Make a call on PmaxService/setPanelState
 Exemple : 
 
     POST /setPanelState HTTP/1.1
@@ -139,12 +129,12 @@ Exemple :
         "method": "PmaxService/setPanelState", 
         "id":1
     }
-avec : 
-{{code_alarme}} : le code à 4 chiffres pour activer l'alarme. 
-{{etat}} : l'état de l'alarme que l'on veut activer : "AWAY", "HOME" (armement partiel) ou "DISARM"
+with : 
+{{code_alarme}} : the 4-digit code to activate the alarm. 
+{{etat}} : the state of the alarm you want to activate : "AWAY", "HOME" (armement partiel) ou "DISARM"
 {{partition}} ; le numéro de la partition : 1, 2 ou 3
-Rq : je ne sais pas le faire sur une alarme non zonée
+Rq : I don't know how to do it on a non-zoned alarm
 
 
-### C'est quoi l'id dans les appels
+### What is the id in calls
 cf https://www.jsonrpc.org/specification
